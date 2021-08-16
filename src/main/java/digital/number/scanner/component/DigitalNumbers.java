@@ -128,10 +128,7 @@ public enum DigitalNumbers {
     private static final Map<String, DigitalNumbers> characterSequenceCache = new HashMap<>();
 
     static {
-
-        for (DigitalNumbers number : values()) {
-            characterSequenceCache.put(stringify(number.charSequence), number);
-        }
+        Arrays.stream(values()).forEach( number -> characterSequenceCache.put(stringify(number.charSequence), number));
     }
 
     private final char[][] charSequence;
