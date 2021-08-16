@@ -46,7 +46,7 @@ public class DigitsTest {
         underTest.add("| || || || || +| || || || |");
         underTest.add("|_||_||_||_||_||_||_||_*|_|");
         
-        String expected = underTest.digits().orElse(null);
+        String expected = underTest.digits().get();
         assertEquals("0000?00?0ILL", expected);
     }    
     

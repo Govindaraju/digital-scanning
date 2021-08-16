@@ -41,36 +41,27 @@ public class Digits {
     }
 
     private Map<Integer, Chunk> chunkNumberSequence() {
-
         Map<Integer, Chunk> chunksMap = new LinkedHashMap<>();
-        for (String numberSequence : numberSequences) {
-            int digitPosition = 0;
-            while (numberSequence.length() >= 3) {
-
-                Chunk chunk = chunksMap.get(digitPosition);
-                if (chunk == null) {
-                    chunk = new Chunk();
-                    chunksMap.put(digitPosition, chunk);
-                }
-                chunk.add(numberSequence.substring(0, 3));
-                numberSequence = numberSequence.substring(3);
-                digitPosition++;
-            }
-        }
+        numberSequences.forEach(numberSequence -> chunkNumberSequence(chunksMap,numberSequence));
         return chunksMap;
     }
 
+    private void chunkNumberSequence(Map<Integer, Chunk> chunksMap, String numberSequence) {
+        int digitPosition = 0;
+        while (numberSequence.length() >= 3) {
+
+            Chunk chunk = chunksMap.get(digitPosition);
+            if (chunk == null) {
+                chunk = new Chunk();
+                chunksMap.put(digitPosition, chunk);
+            }
+            chunk.add(numberSequence.substring(0, 3));
+            numberSequence = numberSequence.substring(3);
+            digitPosition++;
+        }
+    }
 
     private boolean isWellFormed() {
-        if (numberSequences.size() != 3) {
-            return false;
-        }
-
-        for (String numberSequence : numberSequences) {
-            if (numberSequence.length() != 27) {
-                return false;
-            }
-        }
-        return true;
+        return numberSequences.size() == 3 && numberSequences.stream().noneMatch(numberSequence -> numberSequence.length() != 27);
     }
 }
