@@ -1,9 +1,6 @@
 package digital.number.scanner.component;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Digits {
     public static final String ILLEGAL = "ILL";
@@ -22,9 +19,9 @@ public class Digits {
         numberSequences.add(numberSequence);
     }
 
-    public String get() {
+    public Optional<String> digits() {
         digitise();
-        return digits;
+        return Optional.ofNullable(digits);
     }
 
     private void digitise() {
@@ -47,7 +44,6 @@ public class Digits {
 
         Map<Integer, Chunk> chunksMap = new LinkedHashMap<>();
         for (String numberSequence : numberSequences) {
-
             int digitPosition = 0;
             while (numberSequence.length() >= 3) {
 

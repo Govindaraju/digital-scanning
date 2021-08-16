@@ -20,32 +20,24 @@ public class DigitsTest {
         underTest.add("string 2");
         underTest.add("string 3");
 
-        Exception exception = assertThrows(IllegalStateException.class, () -> {
-            underTest.add("string 4");
-        });
+        Exception exception = assertThrows(IllegalStateException.class, () -> underTest.add("string 4"));
 
         assertTrue(exception.getMessage().contains("Capacity exceeded"));
     }
     
     @Test
-    public void shouldReturnNullOnSupplyingLessThanThreeNumberSequences(){
+    public void shouldReturnEmptyOptionalOnSupplyingLessThanThreeNumberSequences(){
         underTest.add(" _  _  _  _  _  _  _  _  _ ");
         underTest.add("| || || || || || || || || |");
-        
-        String expected = underTest.get();
-        
-        assertNull(expected);
+        assertTrue(underTest.digits().isEmpty());
     }    
     
     @Test
-    public void shouldReturnNullOnSupplyingAnyNumberSequenceNotOfLength27(){
+    public void shouldReturnEmptyOptionalOnSupplyingAnyNumberSequenceNotOfLength27(){
         underTest.add(" _  _  _  _  _  _  _  _  _ ");
         underTest.add("| || || || || || || || || |");
         underTest.add("|_||_||_||_||_||_||_||_|");
-        
-        String expected = underTest.get();
-        
-        assertNull(expected);
+        assertTrue(underTest.digits().isEmpty());
     }   
     
     @Test
@@ -54,9 +46,8 @@ public class DigitsTest {
         underTest.add("| || || || || +| || || || |");
         underTest.add("|_||_||_||_||_||_||_||_*|_|");
         
-        String expected = underTest.get();
-        
-        assertTrue(expected.equals("0000?00?0ILL"));
+        String expected = underTest.digits().orElse(null);
+        assertEquals("0000?00?0ILL", expected);
     }    
     
     @Test
@@ -65,9 +56,9 @@ public class DigitsTest {
         underTest.add("| || || || || || || || || |");
         underTest.add("|_||_||_||_||_||_||_||_||_|");
         
-        String expected = underTest.get();
-        
-        assertTrue(expected.equals("000000000"));
+        String expected = underTest.digits().orElse(null);
+
+        assertEquals("000000000", expected);
     }
     
 }

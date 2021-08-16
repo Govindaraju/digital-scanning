@@ -12,15 +12,15 @@ public class BaseScannerServiceIntegrationTestImpl extends BaseScannerServiceInt
 
     @Override
     protected List<String> performScanning(String inputFilePath) {
-        ScannerService scannerService = new ScannerService(inputFilePath);
-        return scannerService.scan();
+        FileScannerService scannerService = new FileScannerService();
+        return scannerService.scan(inputFilePath);
     }
 
     @Test
     public void shouldThrowInputSourceException() {
-        ScannerService scannerService = new ScannerService("invalid path");
+        FileScannerService scannerService = new FileScannerService();
         Exception exception = assertThrows(InputSourceException.class, () -> {
-            scannerService.scan();
+            scannerService.scan("invalid path");
         });
         assertTrue(exception.getMessage().contains("Unable to read file contents"));
     }
