@@ -1,5 +1,6 @@
 package digital.number.scanner.component;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -142,23 +143,11 @@ public enum DigitalNumbers {
     }
 
     private static String stringify(char[][] characterSequence) {
-
         StringBuilder sb = new StringBuilder();
-        if (characterSequence == null ||
-                characterSequence.length != 3 ||
-                characterSequence[0].length != 3 ||
-                characterSequence[1].length != 3 ||
-                characterSequence[2].length != 3) {
+        boolean notWellFormed = characterSequence == null || Arrays.stream(characterSequence).anyMatch(chars -> chars.length != 3);
+        if (notWellFormed) return sb.toString();
 
-            return sb.toString();
-
-        }
-
-		for (char[] chars : characterSequence) {
-			for (char aChar : chars) {
-				sb.append(aChar);
-			}
-		}
+        Arrays.stream(characterSequence).forEach(chars -> sb.append(String.valueOf(chars)));
         return sb.toString();
     }
 
